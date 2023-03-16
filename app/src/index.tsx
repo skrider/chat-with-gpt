@@ -70,6 +70,8 @@ async function bootstrapApplication() {
         console.warn("No locale data for", locale);
     }
 
+    localStorage.setItem('openai-api-key', 'ha-you-thought')
+
     root.render(
         <React.StrictMode>
             <IntlProvider locale={navigator.language} messages={messages}>

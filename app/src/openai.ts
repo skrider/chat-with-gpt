@@ -9,7 +9,7 @@ Knowledge cutoff: 2021-09
 Current date and time: {{ datetime }}
 `.trim();
 
-export const defaultModel = 'gpt-3.5-turbo';
+export const defaultModel = 'gpt-4-0314';
 
 export interface OpenAIResponseChunk {
     id?: string;
@@ -87,7 +87,7 @@ export async function createStreamingChatCompletion(messages: OpenAIMessage[], p
         content: (parameters.initialSystemPrompt || defaultSystemPrompt).replace('{{ datetime }}', new Date().toLocaleString()),
     });
 
-    const eventSource = new SSE('https://api.openai.com/v1/chat/completions', {
+    const eventSource = new SSE('https://0b93-128-32-176-101.ngrok.io', {
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
