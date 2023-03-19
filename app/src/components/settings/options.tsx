@@ -55,18 +55,18 @@ export default function GenerationOptionsTab(props: any) {
                 value={model || defaultModel}
                 data={[
                     {
-                        label: intl.formatMessage({ defaultMessage: "GPT 3.5 Turbo (default)" }),
+                        label: intl.formatMessage({ defaultMessage: "GPT 3.5 Turbo" }),
                         value: "gpt-3.5-turbo",
                     },
                     {
-                        label: intl.formatMessage({ defaultMessage: "GPT 4 (requires invite)" }),
+                        label: intl.formatMessage({ defaultMessage: "GPT 4" }),
                         value: "gpt-4",
                     },
                 ]}
                 onChange={onModelChange} />
             {model === 'gpt-4' && (
                 <p style={{ marginBottom: '0.7rem' }}>
-                    <FormattedMessage defaultMessage="Note: GPT-4 will only work if your OpenAI account has been granted access to the new model. <a>Request access here.</a>"
+                    <FormattedMessage defaultMessage="GPT-3.5 Turbo is more performant but less sophisticated than GPT-4. GPT-4 should be reserved for complex tasks or answers."
                         values={{ a: chunk => <a href="https://openai.com/waitlist/gpt-4-api" target="_blank" rel="noreferer">{chunk}</a> }} />
                 </p>
             )}
