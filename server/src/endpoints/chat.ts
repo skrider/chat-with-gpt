@@ -5,7 +5,6 @@ import RequestHandler from "./base";
 export default class MessagesRequestHandler extends RequestHandler {
     async handler(req: express.Request, res: express.Response) {
         const options = {
-          url: URL,
           headers: {
             'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
           },
@@ -13,8 +12,7 @@ export default class MessagesRequestHandler extends RequestHandler {
         };
 
         // make a request to the specified URL with the added header
-        const forwardedReq = request.post(options);
-
+        const forwardedReq = request.post("https://api.openai.com/v1/chat/completions", options);
         // stream the response from the forwarded request back to the client
         forwardedReq.pipe(res);
     }

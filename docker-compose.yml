@@ -11,6 +11,7 @@ services:
     command: npm run start
     ports:
       - 3000:3000
+    env_file: .env
     environment:
       - PORT=3000
       - WEBAPP_PORT=3000

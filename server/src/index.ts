@@ -73,8 +73,8 @@ export default class ChatServer {
         });
 
         this.app.get('/chatapi/health', (req, res) => new HealthRequestHandler(this, req, res));
-        this.app.get('/chatapi/chat', (req, res) => new ChatRequestHandler(this, req, res));
         this.app.get('/chatapi/session', (req, res) => new SessionRequestHandler(this, req, res));
+        this.app.post('/chatapi/chat', (req, res) => new ChatRequestHandler(this, req, res));
         this.app.post('/chatapi/messages', (req, res) => new MessagesRequestHandler(this, req, res));
         this.app.post('/chatapi/title', (req, res) => new TitleRequestHandler(this, req, res));
         this.app.post('/chatapi/sync', (req, res) => new SyncRequestHandler(this, req, res));
