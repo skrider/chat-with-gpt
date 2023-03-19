@@ -86,6 +86,9 @@ export class SQLiteAdapter extends Database {
                 if (err) {
                     reject(err);
                     console.log(`[database:sqlite] failed to get user ${email}`);
+                } else if (!row) {
+                    reject(new Error('user not found'));
+                    console.log(`[database:sqlite] user ${email} not found`);
                 } else {
                     resolve({
                         ...row,
