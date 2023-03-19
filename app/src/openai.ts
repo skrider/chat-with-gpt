@@ -7,6 +7,7 @@ export const defaultSystemPrompt = `
 You are ChatGPT, a large language model trained by OpenAI.
 Knowledge cutoff: 2021-09
 Current date and time: {{ datetime }}
+Output all mathematical answers using LaTeX syntax.
 `.trim();
 
 export const defaultModel = 'gpt-4';
@@ -44,13 +45,7 @@ function parseResponseChunk(buffer: any): OpenAIResponseChunk {
 }
 
 export async function createChatCompletion(messages: OpenAIMessage[], parameters: Parameters): Promise<string> {
-    if (!parameters.apiKey) {
-        throw new Error('No API key provided');
-    }
-
-    const configuration = new Configuration({
-        apiKey: parameters.apiKey,
-    });
+    const configuration = new Configuration();
     
     const openai = new OpenAIApi(configuration);
 
@@ -64,10 +59,6 @@ export async function createChatCompletion(messages: OpenAIMessage[], parameters
 }
 
 export async function createStreamingChatCompletion(messages: OpenAIMessage[], parameters: Parameters) {
-    if (!parameters.apiKey) {
-        throw new Error('No API key provided');
-    }
-
     const emitter = new EventEmitter();
 
     const messagesToSend = [...messages].filter(m => m.role !== 'app');

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { Button, Drawer, Tabs } from "@mantine/core";
 import { useMediaQuery } from '@mantine/hooks';
 import { useCallback } from 'react';
-import UserOptionsTab from './user';
 import GenerationOptionsTab from './options';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { closeSettingsUI, selectSettingsTab, setTab } from '../../store/settings-ui';
@@ -94,10 +93,8 @@ export default function SettingsDrawer(props: SettingsDrawerProps) {
                 <Tabs value={tab} onTabChange={onTabChange} style={{ margin: '0rem' }}>
                     <Tabs.List grow={small}>
                         <Tabs.Tab value="options">Options</Tabs.Tab>
-                        <Tabs.Tab value="user">User</Tabs.Tab>
                         <Tabs.Tab value="speech">Speech</Tabs.Tab>
                     </Tabs.List>
-                    <UserOptionsTab />
                     <GenerationOptionsTab />
                     <SpeechOptionsTab />
                 </Tabs>

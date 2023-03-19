@@ -150,7 +150,7 @@ export class ChatManager extends EventEmitter {
             }
             clearInterval(timer);
             cancel();
-            reply.content += "\n\nI'm sorry, I'm having trouble connecting to OpenAI. Please make sure you've entered your OpenAI API key correctly and try again.";
+            reply.content += "\n\nI'm sorry, I'm having trouble connecting to OpenAI. Please make sure you've signed in and try again.";
             reply.content = reply.content.trim();
             reply.done = true;
             this.activeReplies.delete(reply.id);

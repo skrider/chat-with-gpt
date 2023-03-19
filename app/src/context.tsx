@@ -4,6 +4,7 @@ import { backend } from "./backend";
 import ChatManagerInstance, { ChatManager } from "./chat-manager";
 import store, { useAppDispatch } from "./store";
 import { openOpenAIApiKeyPanel } from "./store/settings-ui";
+import { openLoginModal } from "./store/ui";
 import { Message } from "./types";
 import { useChat, UseChatResult } from "./use-chat";
 
@@ -53,13 +54,6 @@ export function useCreateAppContext(): Context {
             return false;
         }
 
-        const openaiApiKey = store.getState().apiKeys.openAIApiKey;
-
-        if (!openaiApiKey) {
-            dispatch(openOpenAIApiKeyPanel());
-            return false;
-        }
-
         const parameters = store.getState().parameters;
 
         if (id) {
@@ -68,7 +62,6 @@ export function useCreateAppContext(): Context {
                 content: message.trim(),
                 requestedParameters: {
                     ...parameters,
-                    apiKey: openaiApiKey,
                 },
                 parentID: currentChat.leaf?.id,
             });
@@ -79,7 +72,6 @@ export function useCreateAppContext(): Context {
                 content: message.trim(),
                 requestedParameters: {
                     ...parameters,
-                    apiKey: openaiApiKey,
                 },
                 parentID: currentChat.leaf?.id,
             });
