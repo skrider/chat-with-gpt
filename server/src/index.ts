@@ -10,6 +10,7 @@ import SQLiteObjectStore from './object-store/sqlite';
 import ObjectStore from './object-store/index';
 import Database from './database/index';
 import HealthRequestHandler from './endpoints/health';
+import ChatRequestHandler from './endpoints/chat';
 import TitleRequestHandler from './endpoints/title';
 import MessagesRequestHandler from './endpoints/messages';
 import SyncRequestHandler from './endpoints/sync';
@@ -72,6 +73,7 @@ export default class ChatServer {
         });
 
         this.app.get('/chatapi/health', (req, res) => new HealthRequestHandler(this, req, res));
+        this.app.get('/chatapi/chat', (req, res) => new ChatRequestHandler(this, req, res));
         this.app.get('/chatapi/session', (req, res) => new SessionRequestHandler(this, req, res));
         this.app.post('/chatapi/messages', (req, res) => new MessagesRequestHandler(this, req, res));
         this.app.post('/chatapi/title', (req, res) => new TitleRequestHandler(this, req, res));

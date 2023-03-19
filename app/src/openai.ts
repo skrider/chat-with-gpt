@@ -87,7 +87,7 @@ export async function createStreamingChatCompletion(messages: OpenAIMessage[], p
         content: (parameters.initialSystemPrompt || defaultSystemPrompt).replace('{{ datetime }}', new Date().toLocaleString()),
     });
 
-    const eventSource = new SSE('https://0b93-128-32-176-101.ngrok.io', {
+    const eventSource = new SSE('/chatapi/chat', {
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
