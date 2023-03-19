@@ -21,6 +21,7 @@ import SessionRequestHandler from './endpoints/session';
 import GetShareRequestHandler from './endpoints/get-share';
 import { configurePassport } from './passport';
 import { configureAuth0 } from './auth0';
+import request from 'request';
 
 process.on('unhandledRejection', (reason, p) => {
     console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
@@ -47,8 +48,10 @@ export default class ChatServer {
 
     constructor() {
         this.app = express();
-        
+
         this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(express.json({ limit: '1mb' }));
+
 
         if (process.env.AUTH0_CLIENT_ID && process.env.AUTH0_ISSUER && process.env.PUBLIC_URL) {
             console.log('Configuring Auth0.');
@@ -57,9 +60,6 @@ export default class ChatServer {
             console.log('Configuring Passport.');
             configurePassport(this);
         }
-
-        this.app.use(express.json({ limit: '1mb' }));
-        this.app.use(compression());
 
         this.app.use((req, res, next) => {
             res.set({
@@ -72,9 +72,29 @@ export default class ChatServer {
             next();
         });
 
+        this.app.post('/chatapi/chat', (req: express.Request, res: express.Response) => {
+            // @ts-ignore
+            if (!(Boolean(req.session?.passport?.user?.id) || req.oidc)) {
+                return res.status(401).send('Unauthorized');
+            }
+
+            const options = {
+                headers: {
+                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+                },
+                json: req.body // forward the JSON data from the original request
+            };
+
+            // make a request to the specified URL with the added header
+            const forwardedReq = request.post("https://api.openai.com/v1/chat/completions", options);
+            // stream the response from the forwarded request back to the client
+            forwardedReq.pipe(res);
+        });
+
+        this.app.use(compression());
+
         this.app.get('/chatapi/health', (req, res) => new HealthRequestHandler(this, req, res));
         this.app.get('/chatapi/session', (req, res) => new SessionRequestHandler(this, req, res));
-        this.app.post('/chatapi/chat', (req, res) => new ChatRequestHandler(this, req, res));
         this.app.post('/chatapi/messages', (req, res) => new MessagesRequestHandler(this, req, res));
         this.app.post('/chatapi/title', (req, res) => new TitleRequestHandler(this, req, res));
         this.app.post('/chatapi/sync', (req, res) => new SyncRequestHandler(this, req, res));
@@ -102,7 +122,7 @@ export default class ChatServer {
 
         try {
             this.app.listen(port, () => {
-                console.log(`Listening on port ${port}.`);
+                console.log(`NODE_ENV=${process.env.NODE_ENV} Listening on port ${port}.`);
             });
         } catch (e) {
             console.log(e);
