@@ -15,3 +15,18 @@ services:
     environment:
       - PORT=3000
       - WEBAPP_PORT=3000
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+

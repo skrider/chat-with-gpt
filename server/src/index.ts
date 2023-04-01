@@ -5,7 +5,7 @@ import compression from 'compression';
 import fs from 'fs';
 import path from 'path';
 import S3ObjectStore from './object-store/s3';
-import { SQLiteAdapter } from './database/sqlite';
+import { PostgresAdapter } from './database/postgres';
 import SQLiteObjectStore from './object-store/sqlite';
 import ObjectStore from './object-store/index';
 import Database from './database/index';
@@ -44,7 +44,7 @@ if (process.env['GITPOD_WORKSPACE_URL']) {
 export default class ChatServer {
     app: express.Application;
     objectStore: ObjectStore = process.env.S3_BUCKET ? new S3ObjectStore() : new SQLiteObjectStore();
-    database: Database = new SQLiteAdapter();
+    database: Database = new PostgresAdapter();
 
     constructor() {
         this.app = express();
