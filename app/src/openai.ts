@@ -10,7 +10,7 @@ Current date and time: {{ datetime }}
 Output all mathematical answers using LaTeX syntax. Surround mathematical expressions with dollar signs as follows: $EXPRESSION$
 `.trim();
 
-export const defaultModel = 'gpt-4';
+export const defaultModel = 'gpt-4-turbo';
 
 export interface OpenAIResponseChunk {
     id?: string;

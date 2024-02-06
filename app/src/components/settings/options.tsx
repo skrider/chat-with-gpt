@@ -60,11 +60,11 @@ export default function GenerationOptionsTab(props: any) {
                     },
                     {
                         label: intl.formatMessage({ defaultMessage: "GPT 4" }),
-                        value: "gpt-4",
+                        value: "gpt-4-turbo",
                     },
                 ]}
                 onChange={onModelChange} />
-            {model === 'gpt-4' && (
+            {model === 'gpt-4-turbo' && (
                 <p style={{ marginBottom: '0.7rem' }}>
                     <FormattedMessage defaultMessage="GPT-3.5 Turbo is more performant but less sophisticated than GPT-4. GPT-4 should be reserved for complex tasks or answers."
                         values={{ a: chunk => <a href="https://openai.com/waitlist/gpt-4-api" target="_blank" rel="noreferer">{chunk}</a> }} />
